@@ -1,7 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux';
 import css from './Filter.module.css';
-import PropTypes from 'prop-types';
+import { selectFilter } from 'redux/selector';
+import { updateFilter } from 'redux/slice';
 
-const Filter = ({ filter, onChange }) => {
+const Filter = () => {
+  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
+
   return (
     <>
       <p className={css.filterText}>Find contacts by name</p>
@@ -12,7 +17,7 @@ const Filter = ({ filter, onChange }) => {
         // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         required
         value={filter}
-        onChange={onChange}
+        onChange={event => dispatch(updateFilter(event.target.value))}
       />
     </>
   );
@@ -20,7 +25,7 @@ const Filter = ({ filter, onChange }) => {
 
 export default Filter;
 
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+// Filter.propTypes = {
+//   filter: PropTypes.string.isRequired,
+//   onChange: PropTypes.func.isRequired,
+// };
